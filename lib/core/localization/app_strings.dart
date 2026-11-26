@@ -86,6 +86,7 @@ abstract final class AppStrings {
   // Favorites
   static const String favoriteAdd = 'favorite.add';
   static const String favoriteRemove = 'favorite.remove';
+  static const String favoriteSaveFailed = 'favorite.saveFailed';
 
   // Bottom navigation
   static const String navHome = 'nav.home';

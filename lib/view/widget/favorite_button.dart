@@ -30,6 +30,19 @@ class FavoriteButton extends StatelessWidget {
   final Color color;
   final double iconSize;
 
+  Future<void> _toggle(
+    BuildContext context,
+    FavoritesController favorites,
+  ) async {
+    final ScaffoldMessengerState messenger = ScaffoldMessenger.of(context);
+    if (await favorites.toggle(productId)) return;
+    messenger
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(content: Text(AppStrings.t(AppStrings.favoriteSaveFailed))),
+      );
+  }
+
   @override
   Widget build(BuildContext context) {
     final FavoritesController favorites = Get.find<FavoritesController>();
@@ -43,7 +56,7 @@ class FavoriteButton extends StatelessWidget {
           <String>[title],
         ),
         selected: saved,
-        onTap: () => favorites.toggle(productId),
+        onTap: () => _toggle(context, favorites),
         child: AppAssetImage(
           AppIcon.heart,
           width: iconSize.r,

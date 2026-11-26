@@ -217,13 +217,77 @@ void main() {
     test('toggles and restores saved ids', () async {
       await setUpScreenDependencies();
       final FavoritesController first = Get.find<FavoritesController>();
-      await first.toggle(7);
+      expect(await first.toggle(7), isTrue);
       await first.toggle(9);
       await first.toggle(7);
       expect(first.ids, <int>{9});
       final FavoritesController second = FavoritesController()..onInit();
       expect(second.isFavorite(9), isTrue);
       expect(second.isFavorite(7), isFalse);
+    });
+
+    for (final bool throws in <bool>[false, true]) {
+      test(
+        'undoes the change when the write ${throws ? 'throws' : 'fails'}',
+        () async {
+          await setUpScreenDependencies(
+            prefs: <String, Object>{
+              FavoritesController.storageKey: <String>['4'],
+            },
+          );
+          final FavoritesController c = Get.find<FavoritesController>();
+          Get.find<MyServices>().sharedPreferences = FailingWritePrefs(
+            throws: throws,
+          );
+          expect(await c.toggle(7), isFalse);
+          expect(await c.toggle(4), isFalse);
+          expect(c.ids, <int>{4});
+        },
+      );
+    }
+
+    test('two quick taps that both fail leave the set as it was', () async {
+      await setUpScreenDependencies(
+        prefs: <String, Object>{
+          FavoritesController.storageKey: <String>['4'],
+        },
+      );
+      final FavoritesController c = Get.find<FavoritesController>();
+      Get.find<MyServices>().sharedPreferences = FailingWritePrefs();
+      final Future<bool> first = c.toggle(7);
+      final Future<bool> second = c.toggle(7);
+      // Only the last tap decides what is shown, so only it reports.
+      expect(await first, isTrue);
+      expect(await second, isFalse);
+      expect(c.ids, <int>{4});
+    });
+
+    test('a failed tap is kept when a newer tap saves it', () async {
+      await setUpScreenDependencies(
+        prefs: <String, Object>{
+          FavoritesController.storageKey: <String>['4'],
+        },
+      );
+      final FavoritesController c = Get.find<FavoritesController>();
+      final FailingWritePrefs prefs = FailingWritePrefs(failures: 1);
+      Get.find<MyServices>().sharedPreferences = prefs;
+      final Future<bool> first = c.toggle(7);
+      final Future<bool> second = c.toggle(9);
+      expect(await first, isTrue);
+      expect(await second, isTrue);
+      expect(c.ids, <int>{4, 7, 9});
+      expect(prefs.written, <String>['4', '7', '9']);
+    });
+
+    test('a failure after an earlier save goes back to that save', () async {
+      await setUpScreenDependencies();
+      final FavoritesController c = Get.find<FavoritesController>();
+      final FailingWritePrefs prefs = FailingWritePrefs(failures: 0);
+      Get.find<MyServices>().sharedPreferences = prefs;
+      expect(await c.toggle(3), isTrue);
+      Get.find<MyServices>().sharedPreferences = FailingWritePrefs();
+      expect(await c.toggle(5), isFalse);
+      expect(c.ids, <int>{3});
     });
 
     test('ignores corrupt stored values', () async {
