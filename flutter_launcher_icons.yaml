@@ -1,0 +1,17 @@
+# App icon generated from the Real Scout logo (original palette).
+# Regenerate with:
+#   dart pub global activate flutter_launcher_icons 0.14.4
+#   dart pub global run flutter_launcher_icons
+# 0.14.4 also sets ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS
+# to "AppIcon" in ios/Runner.xcodeproj/project.pbxproj; that setting is a
+# boolean, so discard that change after regenerating.
+# Not a dev dependency: 0.14.4 would pin vector_graphics_compiler (used by
+# flutter_svg at runtime) to an older version.
+flutter_launcher_icons:
+  image_path: "assets/icon/app_icon.png"
+  android: "ic_launcher"
+  min_sdk_android: 21
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/icon/app_icon_foreground.png"
+  ios: true
+  remove_alpha_ios: true
