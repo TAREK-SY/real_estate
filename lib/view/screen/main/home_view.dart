@@ -9,7 +9,6 @@ import '../../../core/class/status_request.dart';
 import '../../../core/constant/app_image_asset.dart';
 import '../../../core/constant/app_keys.dart';
 import '../../../core/functions/greeting.dart';
-import '../../../core/functions/status_message.dart';
 import '../../../core/localization/app_strings.dart';
 import '../../../core/shared/app_asset_image.dart';
 import '../../../core/theme/app_palette.dart';
@@ -18,7 +17,7 @@ import '../../../data/model/product.dart';
 import '../../widget/category_chip_row.dart';
 import '../../widget/circle_icon_button.dart';
 import '../../widget/featured_property_card.dart';
-import '../../widget/property_grid_card.dart';
+import '../../widget/product_results_sliver.dart';
 import '../../widget/search_bar_button.dart';
 import '../../widget/section_header.dart';
 
@@ -35,7 +34,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final MainController main = Get.find<MainController>();
-    final double chipInset = (CategoryChipRow.height - 41.2) / 2;
+    final double chipInset = (CategoryChipRow.height - CategoryChip.height) / 2;
 
     return SafeArea(
       bottom: false,
@@ -60,8 +59,8 @@ class HomeView extends GetView<HomeController> {
                     const _HomeHead(),
                     SizedBox(height: 22.h),
                     SearchBarButton(
-                      onSearch: main.openExplore,
-                      onFilter: main.openExplore,
+                      onSearch: () => main.openExplore(ExploreEntry.search),
+                      onFilter: () => main.openExplore(ExploreEntry.filters),
                     ),
                     SizedBox(height: (24 - SectionHeader.inset).h),
                     SectionHeader(
@@ -92,7 +91,7 @@ class HomeView extends GetView<HomeController> {
                 child: Obx(
                   () => CategoryChipRow(
                     categories: controller.categories.toList(),
-                    selected: controller.selectedCategory.value,
+                    selected: <String>{?controller.selectedCategory.value},
                     onSelected: controller.selectCategory,
                   ),
                 ),
@@ -196,68 +195,21 @@ class _FeaturedRow extends GetView<HomeController> {
   }
 }
 
-/// Two-column grid built as rows, so each row is as tall as its tallest
-/// card instead of a fixed aspect ratio.
 class _RecommendationGrid extends GetView<HomeController> {
   const _RecommendationGrid();
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      final StatusRequest status = controller.status.value;
-      final List<Product> items = controller.products.toList();
-      if (status != StatusRequest.success) {
-        return SliverToBoxAdapter(
-          child: SizedBox(
-            height: 240.h,
-            child: HandlingDataView(
-              status: status,
-              onRetry: controller.loadRecommendations,
-              child: const SizedBox.shrink(),
-            ),
-          ),
-        );
-      }
-      final int rows = (items.length + 1) ~/ 2;
-      final bool loadingMore = controller.isLoadingMore.value;
-      final StatusRequest? moreError = controller.loadMoreError.value;
-      final bool footer = loadingMore || moreError != null;
-      return SliverPadding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        sliver: SliverList.builder(
-          itemCount: rows + (footer ? 1 : 0),
-          itemBuilder: (_, int row) {
-            if (row == rows) {
-              if (moreError != null) {
-                return StateMessageView(
-                  messageKey: statusMessageKey(moreError),
-                  onRetry: canRetry(moreError) ? controller.retryMore : null,
-                );
-              }
-              return SizedBox(height: 64.h, child: const LoadingView());
-            }
-            final Product left = items[row * 2];
-            final Product? right = row * 2 + 1 < items.length
-                ? items[row * 2 + 1]
-                : null;
-            return Padding(
-              padding: EdgeInsets.only(top: row == 0 ? 0 : 20.h),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(child: PropertyGridCard(product: left)),
-                  SizedBox(width: 16.w),
-                  Expanded(
-                    child: right == null
-                        ? const SizedBox.shrink()
-                        : PropertyGridCard(product: right),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-      );
-    });
+    return Obx(
+      () => ProductResultsSliver(
+        layout: ResultsLayout.grid,
+        status: controller.status.value,
+        products: controller.products.toList(),
+        isLoadingMore: controller.isLoadingMore.value,
+        loadMoreError: controller.loadMoreError.value,
+        onRetry: controller.loadRecommendations,
+        onRetryMore: controller.retryMore,
+      ),
+    );
   }
 }

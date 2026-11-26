@@ -60,7 +60,7 @@ class PropertyGridCard extends StatelessWidget {
               ],
             ),
             SizedBox(height: 12.w),
-            Text(
+            LtrText(
               product.title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,

@@ -32,4 +32,7 @@ abstract final class AppIcon {
   static const String profileBold = '$_icons/ic_profile_bold.svg';
   static const String profileLight = '$_icons/ic_profile_light.svg';
   static const String google = '$_icons/ic_google.svg';
+  static const String arrowLeft = '$_icons/ic_arrow_left.svg';
+  static const String minus = '$_icons/ic_minus.svg';
+  static const String plus = '$_icons/ic_plus.svg';
 }

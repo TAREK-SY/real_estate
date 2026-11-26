@@ -8,7 +8,8 @@ import '../../core/theme/app_palette.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../data/model/category.dart';
 
-/// Single-select category chips, "All" first, scrolling horizontally.
+/// Category chips, "All" first, scrolling horizontally. Every selected
+/// category is highlighted; tapping a chip selects that one alone.
 class CategoryChipRow extends StatelessWidget {
   const CategoryChipRow({
     super.key,
@@ -22,8 +23,8 @@ class CategoryChipRow extends StatelessWidget {
 
   final List<Category> categories;
 
-  /// Selected slug; `null` is "All".
-  final String? selected;
+  /// Selected slugs; empty is "All".
+  final Set<String> selected;
   final ValueChanged<String?> onSelected;
 
   @override
@@ -42,7 +43,9 @@ class CategoryChipRow extends StatelessWidget {
             label: category == null
                 ? AppStrings.t(AppStrings.homeAllCategories)
                 : categoryDisplayName(category),
-            selected: selected == category?.slug,
+            selected: category == null
+                ? selected.isEmpty
+                : selected.contains(category.slug),
             onTap: () => onSelected(category?.slug),
           );
         },
@@ -57,11 +60,18 @@ class CategoryChip extends StatelessWidget {
     required this.label,
     required this.selected,
     required this.onTap,
+    this.verticalPadding = 8,
   });
+
+  /// Height of a chip with the default padding.
+  static const double height = 14 * 1.8 + 2 * 8;
 
   final String label;
   final bool selected;
   final VoidCallback onTap;
+
+  /// 8 in the chip rows, 4 in the filter sheet.
+  final double verticalPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +88,10 @@ class CategoryChip extends StatelessWidget {
           child: Center(
             widthFactor: 1,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
+              padding: EdgeInsets.symmetric(
+                horizontal: 20.w,
+                vertical: verticalPadding.h,
+              ),
               decoration: BoxDecoration(
                 color: selected ? palette.primary : palette.primaryFaint,
                 borderRadius: radius,

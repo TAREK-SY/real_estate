@@ -15,6 +15,7 @@ class CircleIconButton extends StatelessWidget {
     required this.onPressed,
     this.soft = false,
     this.iconSize = 22,
+    this.matchTextDirection = false,
   });
 
   final String icon;
@@ -22,6 +23,9 @@ class CircleIconButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool soft;
   final double iconSize;
+
+  /// Mirror the icon in right-to-left layouts (arrows).
+  final bool matchTextDirection;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +46,7 @@ class CircleIconButton extends StatelessWidget {
           width: iconSize.r,
           height: iconSize.r,
           color: palette.black1,
+          matchTextDirection: matchTextDirection,
         ),
       ),
     );

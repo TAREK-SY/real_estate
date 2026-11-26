@@ -74,7 +74,7 @@ class FeaturedPropertyCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(
+                  LtrText(
                     product.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

@@ -7,6 +7,7 @@ import '../../data/model/category.dart';
 import '../../data/model/product.dart';
 import '../../data/model/product_page.dart';
 import '../../data/model/product_query.dart';
+import '../shared/product_pager.dart';
 
 /// Home tab: featured listings, category chips and the paged
 /// recommendation grid.
@@ -24,19 +25,18 @@ class HomeController extends GetxController {
   /// `null` means all categories.
   final RxnString selectedCategory = RxnString();
 
-  final Rx<StatusRequest> status = StatusRequest.none.obs;
-  final RxList<Product> products = <Product>[].obs;
-  final RxBool isLoadingMore = false.obs;
-  final RxBool hasMore = false.obs;
+  late final ProductPager _grid = ProductPager(
+    fetch: (ProductQuery query) => _data.fetchProducts(query),
+    isClosed: () => isClosed,
+  );
+
+  Rx<StatusRequest> get status => _grid.status;
+  RxList<Product> get products => _grid.products;
+  RxBool get isLoadingMore => _grid.isLoadingMore;
+  RxBool get hasMore => _grid.hasMore;
 
   /// Why the last next-page load failed; `null` when it did not.
-  final Rxn<StatusRequest> loadMoreError = Rxn<StatusRequest>();
-
-  ProductQuery _query = const ProductQuery();
-
-  // Bumped on every new grid query; a response for an older one is dropped,
-  // so switching chips quickly never shows the previous category.
-  int _generation = 0;
+  Rxn<StatusRequest> get loadMoreError => _grid.loadMoreError;
 
   @override
   void onInit() {
@@ -77,60 +77,14 @@ class HomeController extends GetxController {
     loadRecommendations();
   }
 
-  Future<void> loadRecommendations() async {
-    final int generation = ++_generation;
-    _query = ProductQuery(categorySlug: selectedCategory.value);
-    status.value = StatusRequest.loading;
-    isLoadingMore.value = false;
-    loadMoreError.value = null;
-    hasMore.value = false;
-    products.clear();
-
-    final Either<StatusRequest, ProductPage> result = await _data.fetchProducts(
-      _query,
-    );
-    if (isClosed || generation != _generation) return;
-    result.fold((StatusRequest failure) => status.value = failure, (
-      ProductPage page,
-    ) {
-      products.assignAll(page.products);
-      hasMore.value = page.hasMore;
-      status.value = page.products.isEmpty
-          ? StatusRequest.empty
-          : StatusRequest.success;
-    });
-  }
+  Future<void> loadRecommendations() =>
+      _grid.load(ProductQuery(categorySlug: selectedCategory.value));
 
   /// Next page of the grid, asked for by scrolling. A failure keeps what is
   /// shown and stops further scroll-driven attempts until [retryMore].
-  Future<void> loadMore() async {
-    if (status.value != StatusRequest.success ||
-        isLoadingMore.value ||
-        loadMoreError.value != null ||
-        !hasMore.value) {
-      return;
-    }
-    final int generation = _generation;
-    final ProductQuery next = _query.nextPage();
-    isLoadingMore.value = true;
-    final Either<StatusRequest, ProductPage> result = await _data.fetchProducts(
-      next,
-    );
-    if (isClosed || generation != _generation) return;
-    isLoadingMore.value = false;
-    if (result.isLeft) {
-      loadMoreError.value = result.left;
-      return;
-    }
-    _query = next;
-    products.addAll(result.right.products);
-    hasMore.value = result.right.hasMore;
-  }
+  Future<void> loadMore() => _grid.loadMore();
 
-  Future<void> retryMore() {
-    loadMoreError.value = null;
-    return loadMore();
-  }
+  Future<void> retryMore() => _grid.retryMore();
 
   /// Pull to refresh. Loaded sections would come back unchanged from the
   /// request cache, so only the ones that failed are asked again; the rest

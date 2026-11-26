@@ -37,6 +37,8 @@ Future<void> main() async {
       supportedLocales: supportedLocales,
       path: 'assets/l10n',
       fallbackLocale: const Locale(SettingsController.fallbackLanguageCode),
+      // Off by default: Arabic needs its few/many plural forms.
+      ignorePluralRules: false,
       startLocale: startLocale,
       // SettingsController owns persistence, so there is one stored value.
       saveLocale: false,

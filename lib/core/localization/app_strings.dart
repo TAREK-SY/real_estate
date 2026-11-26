@@ -5,6 +5,10 @@ import 'package:easy_localization/easy_localization.dart' as ez;
 abstract final class AppStrings {
   static String t(String key) => ez.tr(key);
 
+  /// Plural form of [key] for [count] (`zero`, `one`, `two`, `few`, `many`,
+  /// `other`), with the count in place of `{}`.
+  static String plural(String key, int count) => ez.plural(key, count);
+
   /// [t] with positional `{}` arguments.
   static String tArgs(String key, List<String> args) => ez.tr(key, args: args);
 
@@ -53,6 +57,31 @@ abstract final class AppStrings {
   static const String homeSeeAll = 'home.seeAll';
   static const String homeAllCategories = 'home.allCategories';
   static const String homeRating = 'home.rating';
+
+  // Explore
+  static const String exploreTitle = 'explore.title';
+  static const String exploreBack = 'explore.back';
+  static const String exploreShowGrid = 'explore.showGrid';
+  static const String exploreShowList = 'explore.showList';
+  static const String exploreNoResults = 'explore.noResults';
+
+  /// Plural map: use [plural].
+  static const String exploreFound = 'explore.found';
+
+  // Filter sheet
+  static const String filterTitle = 'filter.title';
+  static const String filterClose = 'filter.close';
+  static const String filterReset = 'filter.reset';
+  static const String filterPrice = 'filter.price';
+  static const String filterType = 'filter.type';
+  static const String filterDetails = 'filter.details';
+  static const String filterMinRating = 'filter.minRating';
+  static const String filterMinStock = 'filter.minStock';
+  static const String filterWeight = 'filter.weight';
+  static const String filterApply = 'filter.apply';
+  static const String filterDecrease = 'filter.decrease';
+  static const String filterIncrease = 'filter.increase';
+  static const String filterRangesUnavailable = 'filter.rangesUnavailable';
 
   // Favorites
   static const String favoriteAdd = 'favorite.add';

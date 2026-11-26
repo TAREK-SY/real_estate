@@ -70,6 +70,36 @@
     "allCategories": "All",
     "rating": "Rated {}"
   },
+  "explore": {
+    "title": "Search for Your Ideal Home",
+    "back": "Back to Home",
+    "showGrid": "Show as grid",
+    "showList": "Show as list",
+    "noResults": "Nothing matches your search and filters.",
+    "found": {
+      "zero": "Found 0 results",
+      "one": "Found 1 result",
+      "two": "Found 2 results",
+      "few": "Found {} results",
+      "many": "Found {} results",
+      "other": "Found {} results"
+    }
+  },
+  "filter": {
+    "title": "Filter",
+    "close": "Close filters",
+    "reset": "Reset",
+    "price": "Price Range",
+    "type": "Property Type",
+    "details": "Details",
+    "minRating": "Min. rating",
+    "minStock": "Min. stock",
+    "weight": "Weight",
+    "apply": "Set Filter",
+    "decrease": "Decrease {}",
+    "increase": "Increase {}",
+    "rangesUnavailable": "Price and weight ranges couldn't be loaded."
+  },
   "favorite": {
     "add": "Add {} to favorites",
     "remove": "Remove {} from favorites"

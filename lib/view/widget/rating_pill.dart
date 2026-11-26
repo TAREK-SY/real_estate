@@ -12,7 +12,8 @@ import '../../core/theme/app_text_styles.dart';
 /// Design sizes of the rating pill.
 enum RatingPillSize {
   featured(star: 14, text: 12, padH: 10, padV: 4, gap: 4),
-  grid(star: 10, text: 10, padH: 6, padV: 4, gap: 2);
+  grid(star: 10, text: 10, padH: 6, padV: 4, gap: 2),
+  list(star: 8, text: 8, padH: 6, padV: 2, gap: 2);
 
   const RatingPillSize({
     required this.star,

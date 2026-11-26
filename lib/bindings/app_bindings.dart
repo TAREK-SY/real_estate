@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../controller/auth/auth_controller.dart';
 import '../controller/auth/splash_controller.dart';
+import '../controller/explore/explore_controller.dart';
 import '../controller/home/home_controller.dart';
 import '../controller/main/main_controller.dart';
 
@@ -27,6 +28,9 @@ class MainBinding extends Bindings {
     }
     if (!Get.isRegistered<HomeController>()) {
       Get.put<HomeController>(HomeController(), permanent: true);
+    }
+    if (!Get.isRegistered<ExploreController>()) {
+      Get.put<ExploreController>(ExploreController(), permanent: true);
     }
   }
 }

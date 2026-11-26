@@ -32,7 +32,17 @@ class ProductQuery {
     this.sort = ProductSort.none,
     this.limit = defaultLimit,
     this.skip = 0,
+    this.fields = listFields,
   });
+
+  /// Every product matching [search] (or of one category when there is no
+  /// search) in one response, with the fields the local filters read.
+  /// DummyJSON returns the whole set for `limit=0`.
+  const ProductQuery.all({this.search = '', this.categorySlug})
+    : sort = ProductSort.none,
+      limit = 0,
+      skip = 0,
+      fields = filterFields;
 
   static const int defaultLimit = 10;
 
@@ -47,11 +57,19 @@ class ProductQuery {
     'category',
   ];
 
+  /// [listFields] plus what the filter sheet reads.
+  static const List<String> filterFields = <String>[
+    ...listFields,
+    'stock',
+    'weight',
+  ];
+
   final String search;
   final String? categorySlug;
   final ProductSort sort;
   final int limit;
   final int skip;
+  final List<String> fields;
 
   String get trimmedSearch => search.trim();
 
@@ -63,13 +81,14 @@ class ProductQuery {
     sort: sort,
     limit: limit,
     skip: skip + limit,
+    fields: fields,
   );
 
   /// Query parameters shared by the list, search and category endpoints.
   Map<String, String> toQueryParameters() => <String, String>{
     'limit': '$limit',
     'skip': '$skip',
-    'select': listFields.join(','),
+    'select': fields.join(','),
     if (isSearch) 'q': trimmedSearch,
     if (sort.field != null) 'sortBy': sort.field!,
     if (sort.order != null) 'order': sort.order!,
