@@ -240,6 +240,15 @@ The purple and orange primaries are too light for white text (4.11:1 and
 (at least 4.5:1, WCAG AA) while icons, sliders and borders keep the design
 color. A test checks the ratios for every palette.
 
+## AI usage summary
+
+Claude Code helped with the fonts, the translation keys (with
+`easy_localization`, which I chose), the data and network layers, the tests,
+screen-size checks, code comments, the `docs/` media, the README, the commits
+and code review. The details, example instructions, how the output was
+verified, what was changed or rejected, and the differences from the design
+are in [AI_USAGE.md](AI_USAGE.md).
+
 ## Assumptions and known limitations
 
 - **DummyJSON does not store writes.** "Booking Now" sends a real
