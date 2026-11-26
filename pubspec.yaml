@@ -35,6 +35,7 @@ flutter:
   assets:
     - assets/l10n/
     - assets/images/
+    - assets/icons/
 
   # Variable fonts; weights are applied through the wght axis (AppTextStyles).
   fonts:
