@@ -45,12 +45,14 @@ void main() {
     );
   });
 
-  test('Arabic values are actually Arabic (except the brand name)', () {
+  test('Arabic values are actually Arabic (except the brand name and the '
+      'English language option, named in its own script)', () {
+    const Set<String> latin = <String>{'appName', 'profile.english'};
     final RegExp arabic = RegExp(r'[\u0600-\u06FF]');
     final List<String> untranslated = <String>[
       for (final MapEntry<String, String>(:String key, :String value)
           in ar.entries)
-        if (key != 'appName' && !arabic.hasMatch(value)) key,
+        if (!latin.contains(key) && !arabic.hasMatch(value)) key,
     ];
     expect(untranslated, isEmpty);
   });

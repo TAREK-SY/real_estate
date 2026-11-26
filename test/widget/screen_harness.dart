@@ -12,6 +12,7 @@ import 'package:real_estate/controller/favorites/favorites_controller.dart';
 import 'package:real_estate/controller/settings/settings_controller.dart';
 import 'package:real_estate/core/class/crud.dart';
 import 'package:real_estate/core/services/services.dart';
+import 'package:real_estate/data/datasource/remote/booking_remote_data.dart';
 import 'package:real_estate/data/datasource/remote/products_remote_data.dart';
 import 'package:real_estate/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -59,6 +60,7 @@ Future<void> setUpScreenDependencies({
   );
   Get.put<Crud>(crud, permanent: true);
   Get.put<ProductsRemoteData>(ProductsRemoteData(crud), permanent: true);
+  Get.put<BookingRemoteData>(BookingRemoteData(crud), permanent: true);
   Get.put<SettingsController>(SettingsController(), permanent: true);
   Get.put<FavoritesController>(FavoritesController(), permanent: true);
 }

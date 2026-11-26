@@ -7,11 +7,12 @@ import 'package:real_estate/routes.dart';
 import 'package:real_estate/view/screen/not_found_screen.dart';
 import 'package:real_estate/view/screen/splash_screen.dart';
 import 'package:real_estate/view/screen/auth_screen.dart';
+import 'package:real_estate/view/screen/details_screen.dart';
 import 'package:real_estate/view/screen/main/main_screen.dart';
 import 'package:real_estate/bindings/app_bindings.dart';
 
+import '../helpers/details_screens.dart';
 import '../helpers/explore_screens.dart';
-import '../helpers/home_api.dart';
 
 import '../helpers/screen_sizes.dart';
 import '../widget/screen_harness.dart';
@@ -24,6 +25,8 @@ final Map<String, Widget Function()> _screens = <String, Widget Function()>{
   'AuthScreen': () => const AuthScreen(),
   'MainScreen': () => const MainScreen(),
   for (final String name in exploreScreens.keys) name: () => const MainScreen(),
+  'DetailsScreen': () => const DetailsScreen(),
+  'ProfileTab': () => const MainScreen(),
 };
 
 final Map<String, Bindings> _bindings = <String, Bindings>{
@@ -35,11 +38,13 @@ final Map<String, Bindings> _bindings = <String, Bindings>{
       )
       in exploreScreens.entries)
     key: value(),
+  'DetailsScreen': DetailsTestBinding(),
+  'ProfileTab': ProfileTabBinding(),
 };
 
 void main() {
   setUpAll(initScreenTestEnvironment);
-  setUp(() => setUpScreenDependencies(handler: FakeHomeApi.explore().handle));
+  setUp(() => setUpScreenDependencies(handler: detailsApi().handle));
 
   for (final MapEntry<String, Widget Function()>(key: name, value: page)
       in _screens.entries) {

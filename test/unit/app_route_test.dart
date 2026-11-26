@@ -10,6 +10,7 @@ const List<String> _allRoutes = <String>[
   AppRoute.splash,
   AppRoute.auth,
   AppRoute.main,
+  AppRoute.details,
   AppRoute.notFound,
 ];
 
