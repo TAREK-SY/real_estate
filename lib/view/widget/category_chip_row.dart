@@ -1,0 +1,105 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:material_ui/material_ui.dart';
+
+import '../../core/constant/app_keys.dart';
+import '../../core/localization/app_strings.dart';
+import '../../core/localization/category_names.dart';
+import '../../core/theme/app_palette.dart';
+import '../../core/theme/app_text_styles.dart';
+import '../../data/model/category.dart';
+
+/// Single-select category chips, "All" first, scrolling horizontally.
+class CategoryChipRow extends StatelessWidget {
+  const CategoryChipRow({
+    super.key,
+    required this.categories,
+    required this.selected,
+    required this.onSelected,
+  });
+
+  /// The row is 48 tall (touch target) around 41 tall chips.
+  static const double height = 48;
+
+  final List<Category> categories;
+
+  /// Selected slug; `null` is "All".
+  final String? selected;
+  final ValueChanged<String?> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: height,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        itemCount: categories.length + 1,
+        separatorBuilder: (_, _) => SizedBox(width: 12.w),
+        itemBuilder: (BuildContext context, int index) {
+          final Category? category = index == 0 ? null : categories[index - 1];
+          return CategoryChip(
+            key: AppKeys.categoryChip(category?.slug ?? 'all'),
+            label: category == null
+                ? AppStrings.t(AppStrings.homeAllCategories)
+                : categoryDisplayName(category),
+            selected: selected == category?.slug,
+            onTap: () => onSelected(category?.slug),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class CategoryChip extends StatelessWidget {
+  const CategoryChip({
+    super.key,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final AppPalette palette = context.palette;
+    final BorderRadius radius = BorderRadius.circular(30.r);
+    return Semantics(
+      button: true,
+      selected: selected,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: radius,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
+          child: Center(
+            widthFactor: 1,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
+              decoration: BoxDecoration(
+                color: selected ? palette.primary : palette.primaryFaint,
+                borderRadius: radius,
+                border: selected
+                    ? null
+                    : Border.all(color: palette.primarySoft),
+              ),
+              child: Text(
+                label,
+                maxLines: 1,
+                style: appTextStyle(
+                  fontSize: 14,
+                  fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+                  height: 1.8,
+                  color: selected ? palette.white : palette.black1,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

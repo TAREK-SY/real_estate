@@ -45,5 +45,38 @@
     "womens-jewellery": "Women's Jewellery",
     "womens-shoes": "Women's Shoes",
     "womens-watches": "Women's Watches"
+  },
+  "auth": {
+    "welcome": "Welcome to Real Scout",
+    "titleLine1": "Let’s Get You Closer",
+    "titleTo": "To ",
+    "titleHighlight": "Your Ideal Home",
+    "subtitle": "Login to Real Scout with Google",
+    "google": "Sign Up with Google",
+    "guestNotice": "Google sign-in isn't connected in this demo, so you're browsing as a guest."
+  },
+  "home": {
+    "greetingMorning": "Good Morning",
+    "greetingAfternoon": "Good Afternoon",
+    "greetingEvening": "Good Evening",
+    "guestName": "Guest",
+    "avatar": "Profile photo",
+    "notifications": "Notifications (not available yet)",
+    "searchHint": "Search something",
+    "filters": "Filters",
+    "featured": "Featured",
+    "recommendation": "Our Recommendation",
+    "seeAll": "See All",
+    "allCategories": "All",
+    "rating": "Rated {}"
+  },
+  "favorite": {
+    "add": "Add {} to favorites",
+    "remove": "Remove {} from favorites"
+  },
+  "nav": {
+    "home": "Home",
+    "explore": "Explore",
+    "profile": "Profile"
   }
 }

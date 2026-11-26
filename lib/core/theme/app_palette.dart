@@ -106,6 +106,35 @@ class AppPalette extends ThemeExtension<AppPalette> {
     ),
   ];
 
+  /// Google sign-in button shadow: (0, 4) blur 60 black at 20%.
+  List<BoxShadow> get googleButtonShadow => <BoxShadow>[
+    BoxShadow(
+      color: const Color(0xFF000000).withValues(alpha: 0.20),
+      offset: const Offset(0, 4),
+      blurRadius: 60,
+    ),
+  ];
+
+  /// Rating pill background: white at 90%.
+  Color get pillBackground => white.withValues(alpha: 0.90);
+
+  /// Darkening under the featured card text, top to bottom (8 design stops).
+  LinearGradient get featuredScrim => const LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    stops: <double>[0, 0.17187, 0.27083, 0.41667, 0.52604, 0.66146, 0.80208, 1],
+    colors: <Color>[
+      Color(0x004B4B4B),
+      Color(0x1D444444),
+      Color(0x2E404040),
+      Color(0x473A3A3A),
+      Color(0x59363636),
+      Color(0x762F2F2F),
+      Color(0x8F282828),
+      Color(0xB2202020),
+    ],
+  );
+
   @override
   AppPalette copyWith({PaletteId? id, Color? primary}) => AppPalette(
     id: id ?? this.id,

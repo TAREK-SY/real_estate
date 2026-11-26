@@ -45,5 +45,38 @@
     "womens-jewellery": "مجوهرات نسائية",
     "womens-shoes": "أحذية نسائية",
     "womens-watches": "ساعات نسائية"
+  },
+  "auth": {
+    "welcome": "مرحباً بك في Real Scout",
+    "titleLine1": "دعنا نقرّبك أكثر",
+    "titleTo": "إلى ",
+    "titleHighlight": "منزلك المثالي",
+    "subtitle": "سجّل الدخول إلى Real Scout عبر Google",
+    "google": "التسجيل عبر Google",
+    "guestNotice": "تسجيل الدخول عبر Google غير موصول في هذا العرض، لذا تتصفّح كضيف."
+  },
+  "home": {
+    "greetingMorning": "صباح الخير",
+    "greetingAfternoon": "مساء الخير",
+    "greetingEvening": "مساء الخير",
+    "guestName": "ضيف",
+    "avatar": "الصورة الشخصية",
+    "notifications": "الإشعارات (غير متاحة بعد)",
+    "searchHint": "ابحث عن شيء",
+    "filters": "الفلاتر",
+    "featured": "المميّزة",
+    "recommendation": "نرشّح لك",
+    "seeAll": "عرض الكل",
+    "allCategories": "الكل",
+    "rating": "التقييم {}"
+  },
+  "favorite": {
+    "add": "أضف {} إلى المفضّلة",
+    "remove": "أزل {} من المفضّلة"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "explore": "استكشاف",
+    "profile": "الملف الشخصي"
   }
 }
