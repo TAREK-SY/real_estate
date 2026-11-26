@@ -15,6 +15,7 @@ class SectionHeader extends StatelessWidget {
     required this.title,
     this.onSeeAll,
     this.seeAllKey,
+    this.leading,
   });
 
   static const double height = 48;
@@ -26,6 +27,9 @@ class SectionHeader extends StatelessWidget {
   final VoidCallback? onSeeAll;
   final Key? seeAllKey;
 
+  /// Shown before the title, 12 apart (the reviews star).
+  final Widget? leading;
+
   @override
   Widget build(BuildContext context) {
     final AppPalette palette = context.palette;
@@ -33,6 +37,7 @@ class SectionHeader extends StatelessWidget {
       height: height,
       child: Row(
         children: <Widget>[
+          if (leading != null) ...<Widget>[leading!, SizedBox(width: 12.w)],
           Expanded(
             child: Semantics(
               header: true,
@@ -68,7 +73,7 @@ class SectionHeader extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       height: 1.4,
-                      color: palette.primary,
+                      color: palette.primaryText,
                     ),
                   ),
                 ),

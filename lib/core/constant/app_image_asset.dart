@@ -35,4 +35,24 @@ abstract final class AppIcon {
   static const String arrowLeft = '$_icons/ic_arrow_left.svg';
   static const String minus = '$_icons/ic_minus.svg';
   static const String plus = '$_icons/ic_plus.svg';
+
+  // Details
+  static const String arrowLeftLight = '$_icons/ic_arrow_left_light.svg';
+  static const String send = '$_icons/ic_send.svg';
+  static const String bed = '$_icons/ic_bed.svg';
+  static const String bath = '$_icons/ic_bath.svg';
+  static const String area = '$_icons/ic_area.svg';
+
+  // Profile
+  static const String arrowRight = '$_icons/ic_arrow_right.svg';
+  static const String editSquare = '$_icons/ic_edit_square.svg';
+  static const String calendar = '$_icons/ic_calendar.svg';
+  static const String wallet = '$_icons/ic_wallet.svg';
+  static const String profileCurved = '$_icons/ic_profile_curved.svg';
+  static const String notificationCurved = '$_icons/ic_notification_curved.svg';
+  static const String shield = '$_icons/ic_shield.svg';
+  static const String moreCircle = '$_icons/ic_more_circle.svg';
+  static const String infoSquare = '$_icons/ic_info_square.svg';
+  static const String users = '$_icons/ic_users.svg';
+  static const String logout = '$_icons/ic_logout.svg';
 }

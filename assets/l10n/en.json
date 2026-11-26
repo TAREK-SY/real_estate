@@ -108,5 +108,92 @@
     "home": "Home",
     "explore": "Explore",
     "profile": "Profile"
+  },
+  "details": {
+    "back": "Back",
+    "share": "Share (not available yet)",
+    "photo": "Photo {} of {}",
+    "reviews": {
+      "zero": "0 reviews",
+      "one": "1 review",
+      "two": "2 reviews",
+      "few": "{} reviews",
+      "many": "{} reviews",
+      "other": "{} reviews"
+    },
+    "stock": "{} in stock",
+    "weight": "Weight {}",
+    "overview": "Overview",
+    "facilities": "Facilities",
+    "gallery": "Gallery",
+    "moreImages": "{} more photos",
+    "reviewsTitle": "Reviews",
+    "price": "Price",
+    "book": "Booking Now",
+    "bookingSent": "Booking request sent. This is a demo API, so nothing is saved.",
+    "loadFailed": "Some details couldn't be loaded."
+  },
+  "time": {
+    "justNow": "Just now",
+    "minutes": {
+      "zero": "{} minutes ago",
+      "one": "1 minute ago",
+      "two": "2 minutes ago",
+      "few": "{} minutes ago",
+      "many": "{} minutes ago",
+      "other": "{} minutes ago"
+    },
+    "hours": {
+      "zero": "{} hours ago",
+      "one": "1 hour ago",
+      "two": "2 hours ago",
+      "few": "{} hours ago",
+      "many": "{} hours ago",
+      "other": "{} hours ago"
+    },
+    "days": {
+      "zero": "{} days ago",
+      "one": "1 day ago",
+      "two": "2 days ago",
+      "few": "{} days ago",
+      "many": "{} days ago",
+      "other": "{} days ago"
+    },
+    "months": {
+      "zero": "{} months ago",
+      "one": "1 month ago",
+      "two": "2 months ago",
+      "few": "{} months ago",
+      "many": "{} months ago",
+      "other": "{} months ago"
+    },
+    "years": {
+      "zero": "{} years ago",
+      "one": "1 year ago",
+      "two": "2 years ago",
+      "few": "{} years ago",
+      "many": "{} years ago",
+      "other": "{} years ago"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "editPhoto": "Change photo (not available yet)",
+    "myBooking": "My Booking",
+    "payments": "Payments",
+    "profile": "Profile",
+    "notification": "Notification",
+    "security": "Security",
+    "language": "Language",
+    "colors": "Colors",
+    "helpCenter": "Help Center",
+    "inviteFriends": "Invite Friends",
+    "logout": "Logout",
+    "english": "English",
+    "arabic": "العربية",
+    "paletteOriginal": "Original",
+    "palettePurple": "New Purple",
+    "paletteOrange": "New Orange",
+    "closeSheet": "Close"
   }
 }

@@ -17,3 +17,10 @@ String formatPrice(num price) {
 /// Formats a rating with one decimal (4.94 -> 4.9).
 String formatRating(num rating) =>
     NumberFormat('0.0', 'en_US').format(rating.clamp(0, 5));
+
+/// A measurement with at most one decimal and Western digits (2, 23.2).
+/// Non-finite values come out as an empty string.
+String formatMeasure(num value) {
+  if (!value.isFinite) return '';
+  return NumberFormat('0.#', 'en_US').format(value);
+}

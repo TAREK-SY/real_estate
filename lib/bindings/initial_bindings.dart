@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../controller/favorites/favorites_controller.dart';
 import '../controller/settings/settings_controller.dart';
 import '../core/class/crud.dart';
+import '../data/datasource/remote/booking_remote_data.dart';
 import '../data/datasource/remote/products_remote_data.dart';
 
 /// App-lifetime dependencies, registered before `runApp`.
@@ -17,6 +18,7 @@ class InitialBindings extends Bindings {
     final Crud client = crud ?? Crud();
     Get.put<Crud>(client, permanent: true);
     Get.put<ProductsRemoteData>(ProductsRemoteData(client), permanent: true);
+    Get.put<BookingRemoteData>(BookingRemoteData(client), permanent: true);
     Get.put<SettingsController>(SettingsController(), permanent: true);
     Get.put<FavoritesController>(FavoritesController(), permanent: true);
   }

@@ -176,6 +176,7 @@ class _ExploreViewState extends State<ExploreView> {
                 emptyMessageKey: AppStrings.exploreNoResults,
                 onRetry: c.retry,
                 onRetryMore: c.results.retryMore,
+                onOpen: Get.find<MainController>().openDetails,
               ),
             ),
             SliverToBoxAdapter(child: SizedBox(height: 20.h)),

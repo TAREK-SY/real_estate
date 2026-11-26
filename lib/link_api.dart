@@ -21,4 +21,9 @@ abstract final class AppLink {
 
   /// GET — categories as `{slug, name, url}` objects.
   static String get categories => '$_products/categories';
+
+  /// POST — a new cart (`{userId, products: [{id, quantity}]}`). Simulated:
+  /// the server answers with the cart but stores nothing.
+  /// See https://dummyjson.com/docs/carts
+  static String get cartsAdd => '$server/carts/add';
 }

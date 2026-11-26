@@ -186,8 +186,10 @@ class _FeaturedRow extends GetView<HomeController> {
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             itemCount: items.length,
             separatorBuilder: (_, _) => SizedBox(width: 20.w),
-            itemBuilder: (_, int index) =>
-                FeaturedPropertyCard(product: items[index]),
+            itemBuilder: (_, int index) => FeaturedPropertyCard(
+              product: items[index],
+              onTap: () => Get.find<MainController>().openDetails(items[index]),
+            ),
           ),
         ),
       );
@@ -209,6 +211,7 @@ class _RecommendationGrid extends GetView<HomeController> {
         loadMoreError: controller.loadMoreError.value,
         onRetry: controller.loadRecommendations,
         onRetryMore: controller.retryMore,
+        onOpen: Get.find<MainController>().openDetails,
       ),
     );
   }

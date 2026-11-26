@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
 
+import '../../core/class/route_arguments.dart';
+import '../../data/model/product.dart';
+import '../../routes.dart';
+
 /// Tabs of the bottom navigation.
 enum MainTab { home, explore, profile }
 
@@ -18,6 +22,16 @@ class MainController extends GetxController {
   void openExplore([ExploreEntry entry = ExploreEntry.browse]) {
     exploreEntry.value = entry;
     select(MainTab.explore);
+  }
+
+  /// Opens a listing. A second tap while the first push is under way is
+  /// ignored rather than stacking two copies.
+  Future<void> openDetails(Product product) async {
+    if (Get.currentRoute == AppRoute.details) return;
+    await Get.toNamed<void>(
+      AppRoute.details,
+      arguments: ProductArgs(id: product.id, preview: product).toMap(),
+    );
   }
 
   /// Returns the pending entry and clears it, so the same entry asked for

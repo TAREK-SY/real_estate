@@ -39,6 +39,28 @@ abstract final class AppKeys {
   static const Key filterRatingStepper = ValueKey<String>('filterRating');
   static const Key filterStockStepper = ValueKey<String>('filterStock');
 
+  static const Key detailsScroll = ValueKey<String>('detailsScroll');
+  static const Key detailsPager = ValueKey<String>('detailsPager');
+  static const Key detailsStatusBackdrop = ValueKey<String>(
+    'detailsStatusBackdrop',
+  );
+  static const Key detailsBack = ValueKey<String>('detailsBack');
+  static const Key detailsShare = ValueKey<String>('detailsShare');
+  static const Key detailsBook = ValueKey<String>('detailsBook');
+  static const Key reviewsSeeAll = ValueKey<String>('reviewsSeeAll');
+  static const Key reviewsSheet = ValueKey<String>('reviewsSheet');
+  static const Key reviewsClose = ValueKey<String>('reviewsClose');
+
+  static const Key profileScroll = ValueKey<String>('profileScroll');
+  static const Key profileNotifications = ValueKey<String>(
+    'profileNotifications',
+  );
+  static const Key profileEditPhoto = ValueKey<String>('profileEditPhoto');
+  static const Key profileLanguage = ValueKey<String>('profileLanguage');
+  static const Key profileColors = ValueKey<String>('profileColors');
+  static const Key profileLogout = ValueKey<String>('profileLogout');
+  static const Key choiceSheet = ValueKey<String>('choiceSheet');
+
   static Key navTab(int index) => ValueKey<String>('navTab$index');
   static Key categoryChip(String slug) => ValueKey<String>('chip:$slug');
   static Key favorite(int productId) => ValueKey<String>('favorite:$productId');
@@ -49,4 +71,5 @@ abstract final class AppKeys {
   static Key filterType(String slug) => ValueKey<String>('type:$slug');
   static Key stepperMinus(Key stepper) => ValueKey<String>('$stepper-');
   static Key stepperPlus(Key stepper) => ValueKey<String>('$stepper+');
+  static Key choiceOption(Object value) => ValueKey<String>('choice:$value');
 }

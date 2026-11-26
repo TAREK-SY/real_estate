@@ -2,9 +2,11 @@ import 'package:get/get.dart';
 
 import '../controller/auth/auth_controller.dart';
 import '../controller/auth/splash_controller.dart';
+import '../controller/details/details_controller.dart';
 import '../controller/explore/explore_controller.dart';
 import '../controller/home/home_controller.dart';
 import '../controller/main/main_controller.dart';
+import '../controller/profile/profile_controller.dart';
 
 class SplashBinding extends Bindings {
   @override
@@ -32,5 +34,13 @@ class MainBinding extends Bindings {
     if (!Get.isRegistered<ExploreController>()) {
       Get.put<ExploreController>(ExploreController(), permanent: true);
     }
+    if (!Get.isRegistered<ProfileController>()) {
+      Get.put<ProfileController>(ProfileController(), permanent: true);
+    }
   }
+}
+
+class DetailsBinding extends Bindings {
+  @override
+  void dependencies() => Get.put<DetailsController>(DetailsController());
 }

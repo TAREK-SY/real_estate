@@ -92,6 +92,63 @@ abstract final class AppStrings {
   static const String navExplore = 'nav.explore';
   static const String navProfile = 'nav.profile';
 
+  // Details
+  static const String detailsBack = 'details.back';
+  static const String detailsShare = 'details.share';
+  static const String detailsPhoto = 'details.photo';
+
+  /// Plural map: use [plural].
+  static const String detailsReviews = 'details.reviews';
+  static const String detailsStock = 'details.stock';
+  static const String detailsWeight = 'details.weight';
+  static const String detailsOverview = 'details.overview';
+  static const String detailsFacilities = 'details.facilities';
+  static const String detailsGallery = 'details.gallery';
+  static const String detailsMoreImages = 'details.moreImages';
+  static const String detailsReviewsTitle = 'details.reviewsTitle';
+  static const String detailsPrice = 'details.price';
+  static const String detailsBook = 'details.book';
+  static const String detailsBookingSent = 'details.bookingSent';
+  static const String detailsLoadFailed = 'details.loadFailed';
+
+  // Relative time
+  static const String timeJustNow = 'time.justNow';
+
+  /// Plural map: use [plural].
+  static const String timeMinutes = 'time.minutes';
+
+  /// Plural map: use [plural].
+  static const String timeHours = 'time.hours';
+
+  /// Plural map: use [plural].
+  static const String timeDays = 'time.days';
+
+  /// Plural map: use [plural].
+  static const String timeMonths = 'time.months';
+
+  /// Plural map: use [plural].
+  static const String timeYears = 'time.years';
+
+  // Profile
+  static const String profileTitle = 'profile.title';
+  static const String profileEditPhoto = 'profile.editPhoto';
+  static const String profileMyBooking = 'profile.myBooking';
+  static const String profilePayments = 'profile.payments';
+  static const String profileProfile = 'profile.profile';
+  static const String profileNotification = 'profile.notification';
+  static const String profileSecurity = 'profile.security';
+  static const String profileLanguage = 'profile.language';
+  static const String profileColors = 'profile.colors';
+  static const String profileHelpCenter = 'profile.helpCenter';
+  static const String profileInviteFriends = 'profile.inviteFriends';
+  static const String profileLogout = 'profile.logout';
+  static const String profileEnglish = 'profile.english';
+  static const String profileArabic = 'profile.arabic';
+  static const String profilePaletteOriginal = 'profile.paletteOriginal';
+  static const String profilePalettePurple = 'profile.palettePurple';
+  static const String profilePaletteOrange = 'profile.paletteOrange';
+  static const String profileCloseSheet = 'profile.closeSheet';
+
   /// Prefix of the category name keys (`category.<slug>`).
   static const String categoryPrefix = 'category';
 }

@@ -22,6 +22,7 @@ class ProductResultsSliver extends StatelessWidget {
     required this.products,
     required this.onRetry,
     required this.onRetryMore,
+    this.onOpen,
     this.isLoadingMore = false,
     this.loadMoreError,
     this.emptyMessageKey = AppStrings.stateEmpty,
@@ -32,6 +33,9 @@ class ProductResultsSliver extends StatelessWidget {
   final List<Product> products;
   final VoidCallback onRetry;
   final VoidCallback onRetryMore;
+
+  /// Called with the tapped card's listing.
+  final ValueChanged<Product>? onOpen;
   final bool isLoadingMore;
   final StatusRequest? loadMoreError;
   final String emptyMessageKey;
@@ -64,7 +68,10 @@ class ProductResultsSliver extends StatelessWidget {
             padding: EdgeInsets.only(top: row == 0 ? 0 : (grid ? 20 : 16).h),
             child: grid
                 ? _gridRow(row)
-                : PropertyListCard(product: products[row]),
+                : PropertyListCard(
+                    product: products[row],
+                    onTap: _open(products[row]),
+                  ),
           );
         },
       ),
@@ -81,15 +88,22 @@ class ProductResultsSliver extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Expanded(child: PropertyGridCard(product: start)),
+        Expanded(
+          child: PropertyGridCard(product: start, onTap: _open(start)),
+        ),
         SizedBox(width: 16.w),
         Expanded(
           child: end == null
               ? const SizedBox.shrink()
-              : PropertyGridCard(product: end),
+              : PropertyGridCard(product: end, onTap: _open(end)),
         ),
       ],
     );
+  }
+
+  VoidCallback? _open(Product product) {
+    final ValueChanged<Product>? open = onOpen;
+    return open == null ? null : () => open(product);
   }
 
   Widget _footer() {
