@@ -9,6 +9,7 @@ import 'package:real_estate/view/screen/auth_screen.dart';
 import 'package:real_estate/view/screen/main/main_screen.dart';
 import 'package:real_estate/bindings/app_bindings.dart';
 
+import '../helpers/explore_screens.dart';
 import '../helpers/home_api.dart';
 
 import '../helpers/screen_sizes.dart';
@@ -21,6 +22,7 @@ final Map<String, Widget Function()> _screens = <String, Widget Function()>{
   'NotFoundScreen': () => const NotFoundScreen(),
   'AuthScreen': () => const AuthScreen(),
   'MainScreen': () => const MainScreen(),
+  for (final String name in exploreScreens.keys) name: () => const MainScreen(),
   'ErrorStateView': () => Scaffold(
     body: HandlingDataView(
       status: StatusRequest.serverFailure,
@@ -33,17 +35,30 @@ final Map<String, Widget Function()> _screens = <String, Widget Function()>{
 final Map<String, Bindings> _bindings = <String, Bindings>{
   'AuthScreen': AuthBinding(),
   'MainScreen': MainBinding(),
+  for (final MapEntry<String, Bindings Function()>(
+        :String key,
+        :Bindings Function() value,
+      )
+      in exploreScreens.entries)
+    key: value(),
 };
 
 /// Screens with text in a horizontal list nested in a vertical one. The
 /// contrast guideline samples those labels at the wrong place on screen
 /// (changing the search hint color changes the result for the third chip),
 /// so for them it is replaced by `palette_contrast_test.dart`.
-const Set<String> _contrastSampledWrongly = <String>{'MainScreen'};
+/// The Explore states are the same shell with the same chips (the filter
+/// sheet's chips sit over the dimmed shell, which the sampling also picks up).
+const Set<String> _contrastSampledWrongly = <String>{
+  'MainScreen',
+  'ExploreList',
+  'ExploreGrid',
+  'FilterSheet',
+};
 
 void main() {
   setUpAll(initScreenTestEnvironment);
-  setUp(() => setUpScreenDependencies(handler: FakeHomeApi.standard().handle));
+  setUp(() => setUpScreenDependencies(handler: FakeHomeApi.explore().handle));
 
   for (final MapEntry<String, Widget Function()>(key: name, value: page)
       in _screens.entries) {

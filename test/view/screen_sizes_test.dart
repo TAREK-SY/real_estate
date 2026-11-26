@@ -10,6 +10,7 @@ import 'package:real_estate/view/screen/auth_screen.dart';
 import 'package:real_estate/view/screen/main/main_screen.dart';
 import 'package:real_estate/bindings/app_bindings.dart';
 
+import '../helpers/explore_screens.dart';
 import '../helpers/home_api.dart';
 
 import '../helpers/screen_sizes.dart';
@@ -22,16 +23,23 @@ final Map<String, Widget Function()> _screens = <String, Widget Function()>{
   'NotFoundScreen': () => const NotFoundScreen(),
   'AuthScreen': () => const AuthScreen(),
   'MainScreen': () => const MainScreen(),
+  for (final String name in exploreScreens.keys) name: () => const MainScreen(),
 };
 
 final Map<String, Bindings> _bindings = <String, Bindings>{
   'AuthScreen': AuthBinding(),
   'MainScreen': MainBinding(),
+  for (final MapEntry<String, Bindings Function()>(
+        :String key,
+        :Bindings Function() value,
+      )
+      in exploreScreens.entries)
+    key: value(),
 };
 
 void main() {
   setUpAll(initScreenTestEnvironment);
-  setUp(() => setUpScreenDependencies(handler: FakeHomeApi.standard().handle));
+  setUp(() => setUpScreenDependencies(handler: FakeHomeApi.explore().handle));
 
   for (final MapEntry<String, Widget Function()>(key: name, value: page)
       in _screens.entries) {

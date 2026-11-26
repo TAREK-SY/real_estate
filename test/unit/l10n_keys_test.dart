@@ -21,6 +21,10 @@ Map<String, String> _load(String lang) => _flatten(
       as Map<String, dynamic>,
 );
 
+// A plural key is a map of forms; its `other` form stands for it.
+bool _has(Map<String, String> strings, String key) =>
+    strings.containsKey(key) || strings.containsKey('$key.other');
+
 void main() {
   final Map<String, String> en = _load('en');
   final Map<String, String> ar = _load('ar');
@@ -59,8 +63,7 @@ void main() {
     ).allMatches(source).map((RegExpMatch m) => m.group(1)!);
     final List<String> missing = <String>[
       for (final String key in keys)
-        if (key != 'category' && (!en.containsKey(key) || !ar.containsKey(key)))
-          key,
+        if (key != 'category' && (!_has(en, key) || !_has(ar, key))) key,
     ];
     expect(keys, isNotEmpty);
     expect(missing, isEmpty);

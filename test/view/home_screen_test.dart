@@ -1,4 +1,4 @@
-import 'package:flutter/semantics.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:material_ui/material_ui.dart';
@@ -109,15 +109,15 @@ void main() {
       );
     });
 
-    testWidgets('search, filter and See All open the Explore tab', (
+    testWidgets('search and See All open the Explore tab', (
       WidgetTester tester,
     ) async {
       await _pumpMain(tester, FakeHomeApi.standard());
       final MainController main = Get.find<MainController>();
       for (final Key key in <Key>[
         AppKeys.homeSearch,
-        AppKeys.homeFilter,
         AppKeys.featuredSeeAll,
+        AppKeys.recommendationSeeAll,
       ]) {
         main.select(MainTab.home);
         await settleFrames(tester);
@@ -125,6 +125,31 @@ void main() {
         await settleFrames(tester);
         expect(main.tab.value, MainTab.explore, reason: '$key');
       }
+    });
+
+    testWidgets('the search bar focuses the Explore search field', (
+      WidgetTester tester,
+    ) async {
+      await _pumpMain(tester, FakeHomeApi.standard());
+      await tester.tap(find.byKey(AppKeys.homeSearch));
+      await settleFrames(tester);
+      final EditableText field = tester.widget<EditableText>(
+        find.descendant(
+          of: find.byKey(AppKeys.exploreSearchField),
+          matching: find.byType(EditableText),
+        ),
+      );
+      expect(field.focusNode.hasFocus, isTrue);
+    });
+
+    testWidgets('the filter icon opens Explore with the filter sheet', (
+      WidgetTester tester,
+    ) async {
+      await _pumpMain(tester, FakeHomeApi.standard());
+      await tester.tap(find.byKey(AppKeys.homeFilter));
+      await settleFrames(tester);
+      expect(Get.find<MainController>().tab.value, MainTab.explore);
+      expect(find.byKey(AppKeys.filterSheet), findsOneWidget);
     });
 
     testWidgets('the bottom bar switches tabs', (WidgetTester tester) async {
@@ -175,6 +200,39 @@ void main() {
         );
       await _pumpMain(tester, api, locale: 'ar');
       expect(tester.takeException(), isNull);
+      // API titles are Latin: cut at their own end, not with a leading "...".
+      final RenderParagraph title = tester.renderObject<RenderParagraph>(
+        find.descendant(
+          of: find.byKey(AppKeys.gridCard(11)),
+          matching: find.textContaining('An extremely long'),
+        ),
+      );
+      expect(title.didExceedMaxLines, isTrue);
+      expect(title.textDirection, TextDirection.ltr);
+    });
+
+    testWidgets('a short Latin title sits at the start of an Arabic card', (
+      WidgetTester tester,
+    ) async {
+      await _pumpMain(tester, FakeHomeApi.standard(), locale: 'ar');
+      final Finder title = find.descendant(
+        of: find.byKey(AppKeys.gridCard(11)),
+        matching: find.text('Listing 11'),
+      );
+      final RenderParagraph paragraph = tester.renderObject<RenderParagraph>(
+        title,
+      );
+      final TextBox first = paragraph
+          .getBoxesForSelection(
+            const TextSelection(baseOffset: 0, extentOffset: 1),
+          )
+          .first;
+      final Rect card = tester.getRect(find.byKey(AppKeys.gridCard(11)));
+      expect(
+        tester.getTopLeft(title).dx + first.left,
+        greaterThan(card.center.dx),
+        reason: 'In a right-to-left layout the title belongs on the right.',
+      );
     });
 
     testWidgets('mirrors in Arabic: price after the title, heart at the end', (

@@ -83,6 +83,7 @@ Widget appHarness({
     supportedLocales: supportedLocales,
     startLocale: Locale(locale),
     fallbackLocale: const Locale('en'),
+    ignorePluralRules: false,
     saveLocale: false,
     assetLoader: const DiskAssetLoader(),
     child: MyApp(initialRoute: initialRoute, pages: pages),

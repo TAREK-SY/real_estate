@@ -25,5 +25,21 @@ void main() {
       );
       expect(_contrast(p.black2, p.white), greaterThanOrEqualTo(4.5));
     });
+
+    test('${id.name}: chip, stepper and slider-label colors', () {
+      // Unselected chips and stepper values: black1 on the faint fill.
+      expect(
+        _contrast(p.black1, _over(p.primaryFaint, p.white)),
+        greaterThanOrEqualTo(4.5),
+      );
+      // Filter row labels: black2 on white.
+      expect(_contrast(p.black2, p.white), greaterThanOrEqualTo(4.5));
+      // White on primary (selected chips) is design-defined per palette:
+      // 5.06:1 original, 4.11 purple, 2.52 orange. Only the original is
+      // held to 4.5 here.
+      if (id == PaletteId.original) {
+        expect(_contrast(p.white, p.primary), greaterThanOrEqualTo(4.5));
+      }
+    });
   }
 }
