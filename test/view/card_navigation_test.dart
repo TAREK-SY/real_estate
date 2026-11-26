@@ -8,6 +8,8 @@ import 'package:real_estate/controller/main/main_controller.dart';
 import 'package:real_estate/core/constant/app_keys.dart';
 import 'package:real_estate/core/services/services.dart';
 import 'package:real_estate/core/services/session_store.dart';
+import 'package:real_estate/core/shared/app_network_image.dart';
+import 'package:real_estate/core/shared/ltr_text.dart';
 import 'package:real_estate/routes.dart';
 import 'package:real_estate/view/screen/details_screen.dart';
 
@@ -50,6 +52,29 @@ void main() {
     expect(Get.currentRoute, AppRoute.details);
     expect(find.byType(DetailsScreen), findsOneWidget);
     expect(Get.find<DetailsController>().product.value?.id, 1);
+  });
+
+  testWidgets('a featured card draws its press ink above the photo', (
+    WidgetTester tester,
+  ) async {
+    await _pumpApp(tester);
+    final Finder card = find.byKey(AppKeys.featuredCard(1));
+    final Finder title = find
+        .descendant(of: card, matching: find.byType(LtrText))
+        .first;
+    // Ink is painted on the nearest Material; under the photo it is hidden.
+    final Finder inkSurface = find
+        .ancestor(of: title, matching: find.byType(Material))
+        .first;
+    expect(find.descendant(of: card, matching: inkSurface), findsOneWidget);
+    expect(
+      find.descendant(of: inkSurface, matching: find.byType(AppNetworkImage)),
+      findsNothing,
+    );
+
+    await tester.tap(find.byKey(AppKeys.favorite(1)));
+    await settleFrames(tester);
+    expect(Get.currentRoute, AppRoute.main);
   });
 
   testWidgets('an Explore list card opens its listing', (

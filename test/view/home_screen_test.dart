@@ -1,4 +1,5 @@
 import 'package:flutter/rendering.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:material_ui/material_ui.dart';
@@ -86,6 +87,44 @@ void main() {
       expect(_chipColor(tester, 'all'), palette.primaryFaint);
       expect(find.text('Listing 21'), findsOneWidget);
       expect(find.text('Listing 11'), findsNothing);
+    });
+
+    testWidgets('chip labels keep their height on a tablet with large text', (
+      WidgetTester tester,
+    ) async {
+      tester.platformDispatcher.textScaleFactorTestValue = 1.3;
+      addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+      await setUpScreenDependencies(handler: FakeHomeApi.standard().handle);
+      await pumpScreen(
+        tester,
+        page: () => const MainScreen(),
+        binding: MainBinding(),
+        size: const Size(800, 1280),
+      );
+      final Finder label = find.descendant(
+        of: find.byKey(AppKeys.categoryChip('all')),
+        matching: find.byType(Text),
+      );
+      final double lineHeight =
+          MediaQuery.textScalerOf(tester.element(label)).scale(14.sp) * 1.8;
+      expect(lineHeight, greaterThan(48));
+      expect(tester.getSize(label).height, closeTo(lineHeight, 1));
+    });
+
+    testWidgets('a heart that cannot be saved reverts and says so', (
+      WidgetTester tester,
+    ) async {
+      await _pumpMain(tester, FakeHomeApi.standard());
+      Get.find<MyServices>().sharedPreferences = FailingWritePrefs();
+      await tester.ensureVisible(find.byKey(AppKeys.favorite(11)));
+      await settleFrames(tester);
+      await tester.tap(find.byKey(AppKeys.favorite(11)));
+      await settleFrames(tester);
+      expect(Get.find<FavoritesController>().isFavorite(11), isFalse);
+      expect(
+        find.text("Couldn't save this favorite. Please try again."),
+        findsOneWidget,
+      );
     });
 
     testWidgets('the heart saves a favorite', (WidgetTester tester) async {

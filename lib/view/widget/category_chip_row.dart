@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -6,6 +8,7 @@ import '../../core/localization/app_strings.dart';
 import '../../core/localization/category_names.dart';
 import '../../core/theme/app_palette.dart';
 import '../../core/theme/app_text_styles.dart';
+import '../../core/util/app_dimensions.dart';
 import '../../data/model/category.dart';
 
 /// Category chips, "All" first, scrolling horizontally. Every selected
@@ -21,6 +24,14 @@ class CategoryChipRow extends StatelessWidget {
   /// The row is 48 tall (touch target) around 41 tall chips.
   static const double height = 48;
 
+  /// A chip outgrows the 48 row on large screens with large text.
+  static double heightOf(BuildContext context) => math.max(
+    height,
+    MediaQuery.textScalerOf(context).scale(size(CategoryChip.fontSize)) *
+            CategoryChip.lineHeight +
+        2 * CategoryChip.rowPadding.h,
+  );
+
   final List<Category> categories;
 
   /// Selected slugs; empty is "All".
@@ -30,7 +41,7 @@ class CategoryChipRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height,
+      height: heightOf(context),
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -60,11 +71,15 @@ class CategoryChip extends StatelessWidget {
     required this.label,
     required this.selected,
     required this.onTap,
-    this.verticalPadding = 8,
+    this.verticalPadding = rowPadding,
   });
 
+  static const double fontSize = 14;
+  static const double lineHeight = 1.8;
+  static const double rowPadding = 8;
+
   /// Height of a chip with the default padding.
-  static const double height = 14 * 1.8 + 2 * 8;
+  static const double height = fontSize * lineHeight + 2 * rowPadding;
 
   final String label;
   final bool selected;
@@ -103,9 +118,9 @@ class CategoryChip extends StatelessWidget {
                 label,
                 maxLines: 1,
                 style: appTextStyle(
-                  fontSize: 14,
+                  fontSize: fontSize,
                   fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
-                  height: 1.8,
+                  height: lineHeight,
                   color: selected ? palette.white : palette.black1,
                 ),
               ),
