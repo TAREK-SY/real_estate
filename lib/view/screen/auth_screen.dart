@@ -87,7 +87,7 @@ class AuthScreen extends GetView<AuthController> {
                                   AppStrings.authTitleHighlight,
                                 ),
                                 style: headline.copyWith(
-                                  color: palette.primary,
+                                  color: palette.primaryText,
                                 ),
                               ),
                             ],

@@ -24,6 +24,7 @@ class AppPalette extends ThemeExtension<AppPalette> {
   const AppPalette({
     required this.id,
     required this.primary,
+    Color? primaryText,
     this.black1 = const Color(0xFF191D31),
     this.black2 = const Color(0xFF666876),
     this.black3 = const Color(0xFF8C8E98),
@@ -34,7 +35,7 @@ class AppPalette extends ThemeExtension<AppPalette> {
     this.error = const Color(0xFFF75555),
     this.shadowBase = const Color(0xFF04060F),
     this.buttonShadowBase = const Color(0xFF704F38),
-  });
+  }) : primaryText = primaryText ?? primary;
 
   static const AppPalette original = AppPalette(
     id: PaletteId.original,
@@ -44,11 +45,13 @@ class AppPalette extends ThemeExtension<AppPalette> {
   static const AppPalette purple = AppPalette(
     id: PaletteId.purple,
     primary: Color(0xFF8B5DFF),
+    primaryText: Color(0xFF8250FF),
   );
 
   static const AppPalette orange = AppPalette(
     id: PaletteId.orange,
     primary: Color(0xFFFF8000),
+    primaryText: Color(0xFFB55B00),
   );
 
   static AppPalette of(PaletteId id) => switch (id) {
@@ -59,6 +62,12 @@ class AppPalette extends ThemeExtension<AppPalette> {
 
   final PaletteId id;
   final Color primary;
+
+  /// The primary hue where text sits on it or is drawn in it (prices, links,
+  /// selected chips, buttons). The purple and orange primaries are too light
+  /// for 4.5:1 against white, so these palettes use a darker shade of the
+  /// same hue; elsewhere it equals [primary].
+  final Color primaryText;
   final Color black1;
   final Color black2;
   final Color black3;
@@ -75,6 +84,13 @@ class AppPalette extends ThemeExtension<AppPalette> {
 
   /// Primary at 4%: unselected chips, tags, search border.
   Color get primaryFaint => primary.withValues(alpha: 0.04);
+
+  /// Ring around the empty page dots, so they show on white product photos
+  /// too (the design's photos are never white).
+  Color get pagerDotBorder => black3.withValues(alpha: 0.5);
+
+  /// Darkening over the last gallery photo, under its "N+" count.
+  Color get photoScrim => const Color(0xFF000000).withValues(alpha: 0.40);
 
   /// Scrim behind bottom sheets.
   Color get overlay => const Color(0xFF000000).withValues(alpha: 0.30);
@@ -136,20 +152,22 @@ class AppPalette extends ThemeExtension<AppPalette> {
   );
 
   @override
-  AppPalette copyWith({PaletteId? id, Color? primary}) => AppPalette(
-    id: id ?? this.id,
-    primary: primary ?? this.primary,
-    black1: black1,
-    black2: black2,
-    black3: black3,
-    white: white,
-    inputFill: inputFill,
-    imagePlaceholder: imagePlaceholder,
-    ratingText: ratingText,
-    error: error,
-    shadowBase: shadowBase,
-    buttonShadowBase: buttonShadowBase,
-  );
+  AppPalette copyWith({PaletteId? id, Color? primary, Color? primaryText}) =>
+      AppPalette(
+        id: id ?? this.id,
+        primary: primary ?? this.primary,
+        primaryText: primaryText ?? (primary == null ? this.primaryText : null),
+        black1: black1,
+        black2: black2,
+        black3: black3,
+        white: white,
+        inputFill: inputFill,
+        imagePlaceholder: imagePlaceholder,
+        ratingText: ratingText,
+        error: error,
+        shadowBase: shadowBase,
+        buttonShadowBase: buttonShadowBase,
+      );
 
   @override
   AppPalette lerp(covariant ThemeExtension<AppPalette>? other, double t) {
@@ -158,6 +176,7 @@ class AppPalette extends ThemeExtension<AppPalette> {
     return AppPalette(
       id: t < 0.5 ? id : other.id,
       primary: mix(primary, other.primary),
+      primaryText: mix(primaryText, other.primaryText),
       black1: mix(black1, other.black1),
       black2: mix(black2, other.black2),
       black3: mix(black3, other.black3),

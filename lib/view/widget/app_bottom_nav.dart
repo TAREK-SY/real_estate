@@ -84,6 +84,7 @@ class _NavItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final AppPalette palette = context.palette;
     final Color color = selected ? palette.primary : palette.black2;
+    final Color labelColor = selected ? palette.primaryText : palette.black2;
     return Semantics(
       button: true,
       selected: selected,
@@ -103,7 +104,7 @@ class _NavItem extends StatelessWidget {
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
                   height: 1.3,
-                  color: color,
+                  color: labelColor,
                 ),
               ),
             ],

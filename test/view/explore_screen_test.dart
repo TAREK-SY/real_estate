@@ -135,7 +135,7 @@ void main() {
       expect(find.byKey(AppKeys.listCard(21)), findsOneWidget);
       expect(
         _chipColor(tester, AppKeys.categoryChip('beauty')),
-        AppPalette.original.primary,
+        AppPalette.original.primaryText,
       );
     });
 
@@ -263,7 +263,7 @@ void main() {
         expect(tester.takeException(), isNull);
         expect(
           _chipColor(tester, AppKeys.categoryChip('all')),
-          AppPalette.of(id).primary,
+          AppPalette.of(id).primaryText,
         );
       });
     }
@@ -338,7 +338,7 @@ void main() {
       await tester.pump();
       expect(
         _chipColor(tester, AppKeys.filterType('furniture')),
-        AppPalette.original.primary,
+        AppPalette.original.primaryText,
       );
       await tester.ensureVisible(find.byKey(AppKeys.filterType('smartphones')));
       await tester.tap(find.byKey(AppKeys.filterType('smartphones')));

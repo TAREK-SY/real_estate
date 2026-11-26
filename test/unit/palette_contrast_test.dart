@@ -14,6 +14,21 @@ double _contrast(Color a, Color b) {
 Color _over(Color top, Color bottom) => Color.alphaBlend(top, bottom);
 
 void main() {
+  test('the original palette uses its primary for text unchanged', () {
+    expect(AppPalette.original.primaryText, AppPalette.original.primary);
+  });
+
+  test('copyWith derives primaryText from a new primary', () {
+    final AppPalette p = AppPalette.orange.copyWith(
+      primary: AppPalette.original.primary,
+    );
+    expect(p.primaryText, AppPalette.original.primary);
+    expect(
+      AppPalette.orange.copyWith().primaryText,
+      AppPalette.orange.primaryText,
+    );
+  });
+
   for (final PaletteId id in PaletteId.values) {
     final AppPalette p = AppPalette.of(id);
     test('${id.name}: body text colors meet 4.5:1 on their backgrounds', () {
@@ -34,12 +49,19 @@ void main() {
       );
       // Filter row labels: black2 on white.
       expect(_contrast(p.black2, p.white), greaterThanOrEqualTo(4.5));
-      // White on primary (selected chips) is design-defined per palette:
-      // 5.06:1 original, 4.11 purple, 2.52 orange. Only the original is
-      // held to 4.5 here.
-      if (id == PaletteId.original) {
-        expect(_contrast(p.white, p.primary), greaterThanOrEqualTo(4.5));
-      }
+    });
+
+    test('${id.name}: primary text and white on it meet 4.5:1', () {
+      // Prices, links and slider labels on white; white labels on selected
+      // chips and buttons.
+      expect(_contrast(p.primaryText, p.white), greaterThanOrEqualTo(4.5));
+    });
+
+    test('${id.name}: primaryText keeps the primary hue', () {
+      final HSLColor text = HSLColor.fromColor(p.primaryText);
+      final HSLColor base = HSLColor.fromColor(p.primary);
+      expect((text.hue - base.hue).abs(), lessThan(1));
+      expect(text.lightness, lessThanOrEqualTo(base.lightness));
     });
   }
 }

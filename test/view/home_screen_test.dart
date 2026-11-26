@@ -79,10 +79,10 @@ void main() {
         );
       await _pumpMain(tester, api);
       final AppPalette palette = AppPalette.original;
-      expect(_chipColor(tester, 'all'), palette.primary);
+      expect(_chipColor(tester, 'all'), palette.primaryText);
       await tester.tap(find.byKey(AppKeys.categoryChip('beauty')));
       await settleFrames(tester);
-      expect(_chipColor(tester, 'beauty'), palette.primary);
+      expect(_chipColor(tester, 'beauty'), palette.primaryText);
       expect(_chipColor(tester, 'all'), palette.primaryFaint);
       expect(find.text('Listing 21'), findsOneWidget);
       expect(find.text('Listing 11'), findsNothing);
@@ -259,7 +259,7 @@ void main() {
           binding: MainBinding(),
         );
         expect(tester.takeException(), isNull);
-        expect(_chipColor(tester, 'all'), AppPalette.of(id).primary);
+        expect(_chipColor(tester, 'all'), AppPalette.of(id).primaryText);
       });
     }
   });

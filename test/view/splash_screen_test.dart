@@ -79,7 +79,10 @@ void main() {
       final SvgAssetLoader loader = logo.bytesLoader as SvgAssetLoader;
       expect(loader.assetName, AppImageAsset.logo(id));
       expect(logo.colorFilter, isNull, reason: 'gradients must not be tinted');
-      expect(_styleOf(tester, 'REAL SCOUT').color, AppPalette.of(id).primary);
+      expect(
+        _styleOf(tester, 'REAL SCOUT').color,
+        AppPalette.of(id).primaryText,
+      );
       expect(Get.find<SettingsController>().palette.value, id);
     });
   }

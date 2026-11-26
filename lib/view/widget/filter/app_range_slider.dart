@@ -51,7 +51,7 @@ class AppRangeSlider extends StatelessWidget {
       fontSize: 12,
       fontWeight: FontWeight.w600,
       height: labelHeight / 12,
-      color: palette.primary,
+      color: palette.primaryText,
       latinFamily: labelFamily,
     );
 

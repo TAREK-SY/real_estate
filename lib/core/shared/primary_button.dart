@@ -44,8 +44,8 @@ class PrimaryButton extends StatelessWidget {
           ),
           child: Material(
             color: _enabled
-                ? palette.primary
-                : palette.primary.withValues(alpha: 0.4),
+                ? palette.primaryText
+                : palette.primaryText.withValues(alpha: 0.4),
             borderRadius: radius,
             child: InkWell(
               borderRadius: radius,

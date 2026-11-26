@@ -93,7 +93,7 @@ class CategoryChip extends StatelessWidget {
                 vertical: verticalPadding.h,
               ),
               decoration: BoxDecoration(
-                color: selected ? palette.primary : palette.primaryFaint,
+                color: selected ? palette.primaryText : palette.primaryFaint,
                 borderRadius: radius,
                 border: selected
                     ? null
