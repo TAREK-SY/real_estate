@@ -1,0 +1,49 @@
+{
+  "appName": "Real Scout",
+  "splash": {
+    "tagline": "نوصلك إلى منزلك المثالي."
+  },
+  "state": {
+    "loading": "جارٍ التحميل…",
+    "empty": "لا يوجد ما يُعرض هنا بعد.",
+    "offline": "لا يوجد اتصال بالإنترنت. تحقّق من الاتصال وحاول مجدداً.",
+    "timeout": "تأخّر الخادم في الاستجابة. حاول مرة أخرى.",
+    "server": "حدث خطأ في الخادم. حاول مرة أخرى لاحقاً.",
+    "notFound": "لم نعثر على ما تبحث عنه.",
+    "unexpected": "وصلنا رد غير متوقع. حاول مرة أخرى.",
+    "failure": "تعذّر إتمام الطلب. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة",
+    "imageUnavailable": "الصورة غير متاحة"
+  },
+  "notFound": {
+    "title": "الصفحة غير موجودة",
+    "subtitle": "الصفحة التي حاولت فتحها غير موجودة.",
+    "action": "العودة إلى البداية"
+  },
+  "category": {
+    "beauty": "جمال",
+    "fragrances": "عطور",
+    "furniture": "أثاث",
+    "groceries": "بقالة",
+    "home-decoration": "ديكور المنزل",
+    "kitchen-accessories": "أدوات المطبخ",
+    "laptops": "حواسيب محمولة",
+    "mens-shirts": "قمصان رجالية",
+    "mens-shoes": "أحذية رجالية",
+    "mens-watches": "ساعات رجالية",
+    "mobile-accessories": "ملحقات الجوال",
+    "motorcycle": "دراجات نارية",
+    "skin-care": "العناية بالبشرة",
+    "smartphones": "هواتف ذكية",
+    "sports-accessories": "مستلزمات رياضية",
+    "sunglasses": "نظارات شمسية",
+    "tablets": "أجهزة لوحية",
+    "tops": "بلوزات",
+    "vehicle": "مركبات",
+    "womens-bags": "حقائب نسائية",
+    "womens-dresses": "فساتين نسائية",
+    "womens-jewellery": "مجوهرات نسائية",
+    "womens-shoes": "أحذية نسائية",
+    "womens-watches": "ساعات نسائية"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "appName": "Real Scout",
+  "splash": {
+    "tagline": "Connecting You to Your Ideal Home."
+  },
+  "state": {
+    "loading": "Loading…",
+    "empty": "Nothing to show here yet.",
+    "offline": "No internet connection. Check your connection and try again.",
+    "timeout": "The server is taking too long to respond. Please try again.",
+    "server": "Something went wrong on the server. Please try again later.",
+    "notFound": "We couldn't find what you're looking for.",
+    "unexpected": "We received an unexpected response. Please try again.",
+    "failure": "The request could not be completed. Please try again.",
+    "retry": "Try again",
+    "imageUnavailable": "Image unavailable"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "subtitle": "The page you tried to open doesn't exist.",
+    "action": "Back to start"
+  },
+  "category": {
+    "beauty": "Beauty",
+    "fragrances": "Fragrances",
+    "furniture": "Furniture",
+    "groceries": "Groceries",
+    "home-decoration": "Home Decoration",
+    "kitchen-accessories": "Kitchen Accessories",
+    "laptops": "Laptops",
+    "mens-shirts": "Men's Shirts",
+    "mens-shoes": "Men's Shoes",
+    "mens-watches": "Men's Watches",
+    "mobile-accessories": "Mobile Accessories",
+    "motorcycle": "Motorcycles",
+    "skin-care": "Skin Care",
+    "smartphones": "Smartphones",
+    "sports-accessories": "Sports Accessories",
+    "sunglasses": "Sunglasses",
+    "tablets": "Tablets",
+    "tops": "Tops",
+    "vehicle": "Vehicles",
+    "womens-bags": "Women's Bags",
+    "womens-dresses": "Women's Dresses",
+    "womens-jewellery": "Women's Jewellery",
+    "womens-shoes": "Women's Shoes",
+    "womens-watches": "Women's Watches"
+  }
+}
