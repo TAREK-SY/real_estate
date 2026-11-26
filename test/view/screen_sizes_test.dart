@@ -6,6 +6,11 @@ import 'package:real_estate/core/middleware/unknown_route_middleware.dart';
 import 'package:real_estate/routes.dart';
 import 'package:real_estate/view/screen/not_found_screen.dart';
 import 'package:real_estate/view/screen/splash_screen.dart';
+import 'package:real_estate/view/screen/auth_screen.dart';
+import 'package:real_estate/view/screen/main/main_screen.dart';
+import 'package:real_estate/bindings/app_bindings.dart';
+
+import '../helpers/home_api.dart';
 
 import '../helpers/screen_sizes.dart';
 import '../widget/screen_harness.dart';
@@ -15,11 +20,18 @@ import '../widget/screen_harness.dart';
 final Map<String, Widget Function()> _screens = <String, Widget Function()>{
   'SplashScreen': () => const SplashScreen(),
   'NotFoundScreen': () => const NotFoundScreen(),
+  'AuthScreen': () => const AuthScreen(),
+  'MainScreen': () => const MainScreen(),
+};
+
+final Map<String, Bindings> _bindings = <String, Bindings>{
+  'AuthScreen': AuthBinding(),
+  'MainScreen': MainBinding(),
 };
 
 void main() {
   setUpAll(initScreenTestEnvironment);
-  setUp(setUpScreenDependencies);
+  setUp(() => setUpScreenDependencies(handler: FakeHomeApi.standard().handle));
 
   for (final MapEntry<String, Widget Function()>(key: name, value: page)
       in _screens.entries) {
@@ -29,7 +41,13 @@ void main() {
         testWidgets('$name renders on $sizeName ($locale)', (
           WidgetTester tester,
         ) async {
-          await pumpScreen(tester, page: page, locale: locale, size: size);
+          await pumpScreen(
+            tester,
+            page: page,
+            binding: _bindings[name],
+            locale: locale,
+            size: size,
+          );
           expect(tester.takeException(), isNull);
         });
       }

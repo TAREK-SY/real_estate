@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:real_estate/controller/favorites/favorites_controller.dart';
 import 'package:real_estate/controller/settings/settings_controller.dart';
 import 'package:real_estate/core/class/crud.dart';
 import 'package:real_estate/core/services/services.dart';
@@ -59,6 +60,7 @@ Future<void> setUpScreenDependencies({
   Get.put<Crud>(crud, permanent: true);
   Get.put<ProductsRemoteData>(ProductsRemoteData(crud), permanent: true);
   Get.put<SettingsController>(SettingsController(), permanent: true);
+  Get.put<FavoritesController>(FavoritesController(), permanent: true);
 }
 
 /// Sets the test surface to a logical size at density 1.

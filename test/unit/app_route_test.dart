@@ -6,7 +6,12 @@ import 'package:real_estate/routes.dart';
 
 /// Every AppRoute constant. Updated by hand on purpose: adding a route
 /// without listing it here fails the test.
-const List<String> _allRoutes = <String>[AppRoute.splash, AppRoute.notFound];
+const List<String> _allRoutes = <String>[
+  AppRoute.splash,
+  AppRoute.auth,
+  AppRoute.main,
+  AppRoute.notFound,
+];
 
 void main() {
   group('AppRoute', () {
