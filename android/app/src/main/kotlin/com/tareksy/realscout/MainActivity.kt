@@ -1,4 +1,4 @@
-package com.example.real_estate
+package com.tareksy.realscout
 
 import io.flutter.embedding.android.FlutterActivity
 
