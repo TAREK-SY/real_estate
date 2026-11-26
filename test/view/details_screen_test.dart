@@ -16,6 +16,8 @@ import 'package:real_estate/core/constant/app_keys.dart';
 import 'package:real_estate/core/shared/app_asset_image.dart';
 import 'package:real_estate/core/shared/ltr_text.dart';
 import 'package:real_estate/core/theme/app_palette.dart';
+import 'package:real_estate/data/model/product.dart';
+import 'package:real_estate/data/model/product_query.dart';
 import 'package:real_estate/data/model/review.dart';
 import 'package:real_estate/routes.dart';
 import 'package:real_estate/view/screen/details_screen.dart';
@@ -123,6 +125,37 @@ void main() {
       expect(c.status.value, StatusRequest.success);
       expect(_requestsTo(api, '/products/14'), 1);
     });
+
+    testWidgets(
+      'a card preview, which has no reviews, claims no review count',
+      (WidgetTester tester) async {
+        final FakeHomeApi api = detailsApi();
+        api.holds['/products/14'] = Completer<void>();
+        final Map<String, dynamic> full =
+            fixture('product') as Map<String, dynamic>;
+        final Product card = Product.tryParse(<String, dynamic>{
+          'id': 14,
+          for (final String field in ProductQuery.listFields)
+            field: full[field],
+        })!;
+        await setUpScreenDependencies(handler: api.handle);
+        await pumpScreen(
+          tester,
+          page: () => const DetailsScreen(),
+          binding: BindingsBuilder<void>(
+            () => Get.put<DetailsController>(
+              DetailsController(args: ProductArgs(id: 14, preview: card)),
+            ),
+          ),
+        );
+        expect(find.text('4.9'), findsOneWidget);
+        expect(find.textContaining('reviews'), findsNothing);
+
+        api.holds['/products/14']!.complete();
+        await settleFrames(tester);
+        expect(find.text('4.9 (3 reviews)'), findsWidgets);
+      },
+    );
 
     testWidgets('without a preview: spinner, then the listing', (
       WidgetTester tester,

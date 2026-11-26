@@ -132,7 +132,11 @@ class DetailsScreen extends GetView<DetailsController> {
     final double sectionGap = (30 - SectionHeader.inset).h;
     final List<String> gallery = product.images.skip(1).toList();
     return <Widget>[
-      _Summary(product: product),
+      // A card's copy carries no reviews, so the count waits for the record.
+      _Summary(
+        product: product,
+        showReviewCount: status == StatusRequest.success,
+      ),
       SizedBox(height: 30.h),
       const AppDivider(),
       if (product.description.isNotEmpty) ...<Widget>[
@@ -315,9 +319,10 @@ class _Header extends GetView<DetailsController> {
 
 /// Title, category tag with the rating, and the three facts.
 class _Summary extends StatelessWidget {
-  const _Summary({required this.product});
+  const _Summary({required this.product, required this.showReviewCount});
 
   final Product product;
+  final bool showReviewCount;
 
   @override
   Widget build(BuildContext context) {
@@ -368,7 +373,9 @@ class _Summary extends StatelessWidget {
                 AppAssetImage(AppIcon.star, width: 20.r, height: 20.r),
                 SizedBox(width: 6.w),
                 Text(
-                  _ratingSummary(product),
+                  showReviewCount
+                      ? _ratingSummary(product)
+                      : formatRating(product.rating),
                   style: appTextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
