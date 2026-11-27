@@ -94,6 +94,9 @@ class _ExploreViewState extends State<ExploreView> {
 
   @override
   Widget build(BuildContext context) {
+    // The tabs are const and stay alive, so the language switched on Profile
+    // reaches this build only through this dependency.
+    Localizations.localeOf(context);
     final ExploreController c = _explore;
     final double chipInset = (CategoryChipRow.height - CategoryChip.height) / 2;
     final double headInset = (TapArea.minSize - 44) / 2;

@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -122,6 +124,51 @@ void main() {
     );
     // Still on the Profile tab after the rebuild.
     expect(Get.find<MainController>().tab.value, MainTab.profile);
+  });
+
+  testWidgets('switching language leaves no English text on any tab', (
+    WidgetTester tester,
+  ) async {
+    Iterable<String> values(Object? node) sync* {
+      if (node is Map) {
+        for (final Object? v in node.values) {
+          yield* values(v);
+        }
+      } else if (node is String) {
+        yield node;
+      }
+    }
+
+    Set<String> strings(String locale) =>
+        values(jsonDecode(File('assets/l10n/$locale.json').readAsStringSync()))
+            .toSet();
+    final Set<String> englishOnly = strings('en').difference(strings('ar'))
+      ..removeWhere((String s) => s.contains('{}'));
+
+    await _pumpProfile(tester);
+    // Build every tab in English first, as a user browsing before switching.
+    for (final MainTab tab in <MainTab>[MainTab.explore, MainTab.profile]) {
+      await tester.tap(find.byKey(AppKeys.navTab(tab.index)));
+      await settleFrames(tester);
+    }
+    await tester.tap(find.byKey(AppKeys.profileLanguage));
+    await settleFrames(tester);
+    await tester.tap(find.byKey(AppKeys.choiceOption('ar')));
+    await settleFrames(tester, frames: 12);
+
+    await tester.tap(find.byKey(AppKeys.navTab(MainTab.explore.index)));
+    await settleFrames(tester);
+    final List<String> stale = tester
+        .widgetList<Text>(
+          find.descendant(
+            of: find.byType(MainScreen),
+            matching: find.byType(Text, skipOffstage: false),
+          ),
+        )
+        .map((Text t) => t.data ?? '')
+        .where(englishOnly.contains)
+        .toList();
+    expect(stale, isEmpty);
   });
 
   for (final String locale in <String>['en', 'ar']) {

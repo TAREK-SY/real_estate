@@ -33,6 +33,8 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    // See ExploreView: rebuild when the language changes on Profile.
+    Localizations.localeOf(context);
     final MainController main = Get.find<MainController>();
     final double chipInset = (CategoryChipRow.height - CategoryChip.height) / 2;
 
