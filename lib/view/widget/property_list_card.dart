@@ -31,110 +31,117 @@ class PropertyListCard extends StatelessWidget {
     final BorderRadius radius = BorderRadius.circular(28.r);
     return Semantics(
       container: true,
-      child: Material(
-        type: MaterialType.transparency,
-        child: Ink(
-          key: AppKeys.listCard(product.id),
-          decoration: BoxDecoration(
-            color: palette.white,
-            borderRadius: radius,
-            boxShadow: palette.cardShadow,
-          ),
-          child: InkWell(
-            onTap: onTap,
-            borderRadius: radius,
-            child: Padding(
-              // The heart's 48 target reaches 13 past the icon, taken out of the
-              // 18 end padding; the price keeps the design edge with its own inset.
-              padding: EdgeInsetsDirectional.fromSTEB(
-                14.w,
-                14.w,
-                (18 - heartInset).w,
-                14.w,
-              ),
-              child: Row(
-                children: <Widget>[
-                  Stack(
-                    children: <Widget>[
-                      AppNetworkImage(
-                        url: product.thumbnail,
-                        width: imageSize.w,
-                        height: imageSize.w,
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      PositionedDirectional(
-                        top: 6.67.w,
-                        end: 6.67.w,
-                        child: RatingPill(
-                          rating: product.rating,
-                          size: RatingPillSize.list,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(width: 14.w),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+      // Material clips the ink it paints to its own size, so the shadow,
+      // which falls outside the card, has to be drawn above it.
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: radius,
+          boxShadow: palette.cardShadow,
+        ),
+        child: Material(
+          type: MaterialType.transparency,
+          child: Ink(
+            key: AppKeys.listCard(product.id),
+            decoration: BoxDecoration(
+              color: palette.white,
+              borderRadius: radius,
+            ),
+            child: InkWell(
+              onTap: onTap,
+              borderRadius: radius,
+              child: Padding(
+                // The heart's 48 target reaches 13 past the icon, taken out of the
+                // 18 end padding; the price keeps the design edge with its own inset.
+                padding: EdgeInsetsDirectional.fromSTEB(
+                  14.w,
+                  14.w,
+                  (18 - heartInset).w,
+                  14.w,
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Stack(
                       children: <Widget>[
-                        LtrText(
-                          product.title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: appTextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            height: 1.4,
-                            color: palette.black1,
-                          ),
+                        AppNetworkImage(
+                          url: product.thumbnail,
+                          width: imageSize.w,
+                          height: imageSize.w,
+                          borderRadius: BorderRadius.circular(10.r),
                         ),
-                        SizedBox(height: 10.w),
-                        Text(
-                          listingSubtitle(product),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: appTextStyle(
-                            fontSize: 14,
-                            height: 1.4,
-                            color: palette.black2,
+                        PositionedDirectional(
+                          top: 6.67.w,
+                          end: 6.67.w,
+                          child: RatingPill(
+                            rating: product.rating,
+                            size: RatingPillSize.list,
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(width: 8.w),
-                  SizedBox(
-                    height: imageSize.w,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        FavoriteButton(
-                          productId: product.id,
-                          title: product.title,
-                          color: palette.black2,
-                          iconSize: 22,
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.only(
-                            end: heartInset.w,
-                            bottom: 10.w,
-                          ),
-                          child: LtrText(
-                            formatPrice(product.price),
-                            maxLines: 1,
+                    SizedBox(width: 14.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          LtrText(
+                            product.title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                             style: appTextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
-                              height: 1.2,
-                              color: palette.primaryText,
+                              height: 1.4,
+                              color: palette.black1,
                             ),
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 10.w),
+                          Text(
+                            listingSubtitle(product),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: appTextStyle(
+                              fontSize: 14,
+                              height: 1.4,
+                              color: palette.black2,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                    SizedBox(width: 8.w),
+                    SizedBox(
+                      height: imageSize.w,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          FavoriteButton(
+                            productId: product.id,
+                            title: product.title,
+                            color: palette.black2,
+                            iconSize: 22,
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.only(
+                              end: heartInset.w,
+                              bottom: 10.w,
+                            ),
+                            child: LtrText(
+                              formatPrice(product.price),
+                              maxLines: 1,
+                              style: appTextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                height: 1.2,
+                                color: palette.primaryText,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

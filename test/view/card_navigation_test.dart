@@ -77,6 +77,42 @@ void main() {
     expect(Get.currentRoute, AppRoute.main);
   });
 
+  testWidgets('grid and list cards draw their shadow outside the ink layer', (
+    WidgetTester tester,
+  ) async {
+    // Ink is clipped to its Material, so a shadow drawn there never shows.
+    bool shadowed(Decoration? d) =>
+        d is BoxDecoration && (d.boxShadow?.isNotEmpty ?? false);
+    bool inkShadow(Widget w) => w is Ink && shadowed(w.decoration);
+    bool boxShadow(Widget w) => w is DecoratedBox && shadowed(w.decoration);
+
+    void expectVisibleShadow(Finder card) {
+      final Finder inkWell = find
+          .descendant(of: card, matching: find.byType(InkWell))
+          .first;
+      final Finder surface = find
+          .ancestor(of: inkWell, matching: find.byType(Material))
+          .first;
+      expect(
+        find.descendant(
+          of: surface,
+          matching: find.byWidgetPredicate(inkShadow),
+        ),
+        findsNothing,
+      );
+      expect(
+        find.ancestor(of: surface, matching: find.byWidgetPredicate(boxShadow)),
+        findsWidgets,
+      );
+    }
+
+    await _pumpApp(tester);
+    expectVisibleShadow(find.byKey(AppKeys.gridCard(11)));
+    await tester.tap(find.byKey(AppKeys.navTab(MainTab.explore.index)));
+    await settleFrames(tester);
+    expectVisibleShadow(find.byKey(AppKeys.listCard(11)));
+  });
+
   testWidgets('an Explore list card opens its listing', (
     WidgetTester tester,
   ) async {

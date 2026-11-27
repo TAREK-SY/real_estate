@@ -32,85 +32,92 @@ class PropertyGridCard extends StatelessWidget {
     final BorderRadius radius = BorderRadius.circular(12.r);
     return Semantics(
       container: true,
-      child: Material(
-        type: MaterialType.transparency,
-        child: Ink(
-          key: AppKeys.gridCard(product.id),
-          decoration: BoxDecoration(
-            color: palette.white,
-            borderRadius: radius,
-            boxShadow: palette.cardShadow,
-          ),
-          child: InkWell(
-            onTap: onTap,
-            borderRadius: radius,
-            child: Padding(
-              // The heart's 48 touch target adds 14 below the price row, taken out
-              // of the 20 bottom padding.
-              padding: EdgeInsetsDirectional.fromSTEB(14.w, 16.w, 14.w, 6.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Stack(
-                    children: <Widget>[
-                      AppNetworkImage(
-                        url: product.thumbnail,
-                        width: double.infinity,
-                        height: imageHeight.w,
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      PositionedDirectional(
-                        top: 12.w,
-                        end: 12.w,
-                        child: RatingPill(
-                          rating: product.rating,
-                          size: RatingPillSize.grid,
+      // Material clips the ink it paints to its own size, so the shadow,
+      // which falls outside the card, has to be drawn above it.
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: radius,
+          boxShadow: palette.cardShadow,
+        ),
+        child: Material(
+          type: MaterialType.transparency,
+          child: Ink(
+            key: AppKeys.gridCard(product.id),
+            decoration: BoxDecoration(
+              color: palette.white,
+              borderRadius: radius,
+            ),
+            child: InkWell(
+              onTap: onTap,
+              borderRadius: radius,
+              child: Padding(
+                // The heart's 48 touch target adds 14 below the price row, taken out
+                // of the 20 bottom padding.
+                padding: EdgeInsetsDirectional.fromSTEB(14.w, 16.w, 14.w, 6.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Stack(
+                      children: <Widget>[
+                        AppNetworkImage(
+                          url: product.thumbnail,
+                          width: double.infinity,
+                          height: imageHeight.w,
+                          borderRadius: BorderRadius.circular(10.r),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 12.w),
-                  LtrText(
-                    product.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: appTextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      height: 1.2,
-                      color: palette.black1,
-                    ),
-                  ),
-                  SizedBox(height: 10.w),
-                  Text(
-                    listingSubtitle(product),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: appTextStyle(fontSize: 12, color: palette.black3),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: LtrText(
-                          formatPrice(product.price),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: appTextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            height: 1.2,
-                            color: palette.primaryText,
+                        PositionedDirectional(
+                          top: 12.w,
+                          end: 12.w,
+                          child: RatingPill(
+                            rating: product.rating,
+                            size: RatingPillSize.grid,
                           ),
                         ),
+                      ],
+                    ),
+                    SizedBox(height: 12.w),
+                    LtrText(
+                      product.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: appTextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        height: 1.2,
+                        color: palette.black1,
                       ),
-                      FavoriteButton(
-                        productId: product.id,
-                        title: product.title,
-                        color: palette.black2,
-                      ),
-                    ],
-                  ),
-                ],
+                    ),
+                    SizedBox(height: 10.w),
+                    Text(
+                      listingSubtitle(product),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: appTextStyle(fontSize: 12, color: palette.black3),
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: LtrText(
+                            formatPrice(product.price),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: appTextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              height: 1.2,
+                              color: palette.primaryText,
+                            ),
+                          ),
+                        ),
+                        FavoriteButton(
+                          productId: product.id,
+                          title: product.title,
+                          color: palette.black2,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
