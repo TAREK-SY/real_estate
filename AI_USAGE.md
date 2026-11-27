@@ -43,7 +43,7 @@
 - DummyJSON parameters were tried with real requests before any code was
   written, and the test fixtures are real API responses.
 - Every change had to pass `dart format`, `flutter analyze` and the test suite
-  (480 tests, 99.5% line coverage), enforced by a pre-push hook.
+  (482 tests, 99.5% line coverage), enforced by a pre-push hook.
 - Each fix needed a test that failed before the fix.
 - Every screen was compared side by side with the Figma frames in both
   languages and in the three palettes; the release build was also checked on

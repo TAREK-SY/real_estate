@@ -93,7 +93,7 @@ flutter analyze
 flutter test --coverage
 ```
 
-480 tests, 99.5% line coverage. The suite covers:
+482 tests, 99.5% line coverage. The suite covers:
 
 - **Unit:** JSON parsing against real-shaped fixtures, the HTTP layer (offline,
   timeout, 4xx/5xx, malformed bodies), the query cache, pagination, the filter
